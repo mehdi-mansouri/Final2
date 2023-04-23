@@ -181,17 +181,31 @@ class intent:
   def intentText(self,intentText):
         
     df = pd.DataFrame(self.train_data)
-    # Vectorize the input text using TF-IDF
     vectorizer = TfidfVectorizer()
     X_train = vectorizer.fit_transform(df['input'])
-    # Train a SVM classifier on the vectorized data
+
+
     clf = SVC()
     clf.fit(X_train, df['intent'])
-    # Use the trained classifier to predict the intent of new, unseen inputs
-    # test_input = ['How can I determine the best financing option for my specific energy-saving project?']
+
     X_test = vectorizer.transform([intentText])
     predicted_intent = clf.predict(X_test)
+
+    # Calculate accuracy on training data
+    y_pred_train = clf.predict(X_train)
+    accuracy_train = accuracy_score(df['intent'], y_pred_train)
+
     print("Predicted intent:", predicted_intent)
-    return  str(predicted_intent[0]) 
-#intent_user_text=intent()
-#print(intent_user_text.intentText(['save energy in summer!']))
+    print("Training accuracy:", accuracy_train)
+
+    return str(predicted_intent[0])
+
+
+    # clf = SVC()
+    # clf.fit(X_train, df['intent'])
+    # X_test = vectorizer.transform([intentText])
+
+    # predicted_intent = clf.predict(X_test)
+    # print("Predicted intent:", predicted_intent)
+    # return  str(predicted_intent[0]) 
+

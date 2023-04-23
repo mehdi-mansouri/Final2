@@ -1,8 +1,5 @@
 import spacy
 import pandas as pd
-import nltk
-from nltk import word_tokenize, pos_tag
-# Load the large English NLP model
 
 class entityClass:
     def __init__(self, tweet):

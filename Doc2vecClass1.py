@@ -35,30 +35,24 @@ class Doc2vecClass:
             train_corpus = list(self.read_corpus("EnergyTipss.json"))
             fname = "my_doc2vec_model_orginal"
         elif (sentiment == 'posetive'):
-            train_corpus = list(self.read_corpus("EnergyTipss_posetive_tweets.json"))
+            train_corpus = list(self.read_corpus("EnergyTips_posetive_tweets.json"))
             fname = "my_doc2vec_model_posetive"
         elif (sentiment == 'negative'):
-            train_corpus = list(self.read_corpus("EnergyTipss_negative_tweets.json"))
+            train_corpus = list(self.read_corpus("EnergyTips_negative_tweets.json"))
             fname = "my_doc2vec_model_negative"
         elif (sentiment == 'neutral'):
-            train_corpus = list(self.read_corpus("EnergyTipss_neutral_tweets.json"))
+            train_corpus = list(self.read_corpus("EnergyTips_neutral_tweets.json"))
             fname = "my_doc2vec_model_neutral"
+        
         tweet_liste=[]
-        #wenn einmal model trainiert wurde, brauchen wir nicht nochmal machen,
-        #es ist notwendig neue model erstellen ,wenn wir nue datei erstellt wird 
-        if self.existdoc:
-            #test_corpus = list(self.read_corpus("save_file.json", tokens_only=True))
-            
+
+        if self.existdoc:            
             model.build_vocab(train_corpus)
-            #print(f"Word 'penalty' appeared {model.dv.get_vecattr('energy', 'count')} times in the training corpus.")
             model.train(train_corpus, total_examples=model.corpus_count, epochs=model.epochs )
-            #model.test(test_corpus, total_examples=model.corpus_count, epochs=model.epochs )
-            #----save model
-           
-            model.save(fname)
-            
+            model.save(fname)       
         else: 
             model = gensim.models.doc2vec.Doc2Vec.load(fname)
+            
         inferred_vector = model.infer_vector(self.userTextVariable)
         sims = model.dv.most_similar([inferred_vector], topn=len(model.dv))
 
