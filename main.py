@@ -27,17 +27,16 @@ async def message_callback(room: MatrixRoom, event: RoomMessageText) -> None:
         print(text)
         
         doc = Doc2vecClass(text, True)
-        # hier sollte auch Sentiment als  Parametr hinzufügen  orginal  posetive   negative   neutral
-        liste = doc.userText('posetive')
+        # hier sollte auch Sentiment als  
+        # Parametr hinzufügen  orginal  posetive   negative   neutral
+        liste = doc.userText('orginal')
         print('-----------entity user text---------')
        
         # -----------Intent user Text
         entity_user_text = entityClass(text_user)
         #print(entity_user_text.entityspacy())
         entity_user.append(entity_user_text.entityspacy())
-        
-        print('-----------entity user text---------')
-        print('-----------Intent user text---------')
+
         intent_user_text=intent()
         intent_user.append(intent_user_text.intentText(text_user))
         print('Intent of User Text',intent_user)
